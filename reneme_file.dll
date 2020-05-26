@@ -1,0 +1,26 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#define STR_SIZE ((size_t)40)
+int main()
+{
+	int br;
+	char ime = '0';
+	FILE *fp;
+	fp = fopen("route.txt", "r");
+	br = broi_redove(fp);
+	fclose(fp);
+	br - 1;
+	br = br / 6;
+	while (br != 0)
+	{
+		ime++;
+		br--;
+	}
+	int ren;
+	char newname[20], oldname[] = "New_FILE.txt";
+	strcpy(newname, " .txt");
+	newname[0] = ime;
+	ren = rename(oldname, newname);
+	return 0;
+}
