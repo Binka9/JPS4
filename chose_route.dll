@@ -1,0 +1,302 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#define STR_SIZE ((size_t)40)
+int main()
+{
+	char *nachalni_kordinati, *kraini_kordinati, ime, newname[20];
+	ime = '1';
+	char option2;
+	nachalni_kordinati = calloc(STR_SIZE, sizeof(char));
+	kraini_kordinati = calloc(STR_SIZE, sizeof(char));
+	printf("Insert inital cordinates latitude and longitude: ");
+	gets(nachalni_kordinati);
+	printf("Insert final cordinates latitude and longitude: ");
+	gets(kraini_kordinati);
+	option2 = Option2();
+	int br, i, j = 0;
+	FILE *fp;
+	fp = fopen("route.txt", "r");
+	br = broi_redove(fp);
+	fclose(fp);
+	br = br / 6;
+	Route route[br];
+	for (i = 0; i<br; i++)
+	{
+		route[i].name_of_route = calloc(STR_SIZE, sizeof(char));
+		route[i].initial_cordinates = calloc(STR_SIZE, sizeof(char));
+		route[i].final_cordinates = calloc(STR_SIZE, sizeof(char));
+		route[i].type_of_road = calloc(STR_SIZE, sizeof(char));
+		route[i].type_of_road1 = calloc(STR_SIZE, sizeof(char));
+		route[i].type_of_road2 = calloc(STR_SIZE, sizeof(char));
+	}
+	char *str;
+	FILE *ff = fopen("route.txt", "r");
+	if (ff == NULL)
+	{
+		printf("close programm");
+	}
+	else
+	{
+		str = getc(ff);
+		while (str != EOF)
+		{
+			for (i = 0; i<br; i++)
+			{
+				j = 0;
+				while (str != '\n')
+				{
+					route[i].name_of_route[j] = str;
+					str = getc(ff);
+					j++;
+				}
+				j = 0;
+				str = getc(ff);
+				while (str != '\n')
+				{
+					route[i].initial_cordinates[j] = str;
+					str = getc(ff);
+					j++;
+				}
+				j = 0;
+				str = getc(ff);
+				while (str != '\n')
+				{
+					route[i].final_cordinates[j] = str;
+					str = getc(ff);
+					j++;
+				}
+				j = 0;
+				str = getc(ff);
+				while (str != '\n')
+				{
+					route[i].type_of_road[j] = str;
+					str = getc(ff);
+					j++;
+					if (str == '\n') break;
+				}
+				j = 0;
+				str = getc(ff);
+				while (str != '\n')
+				{
+					route[i].type_of_road1[j] = str;
+					str = getc(ff);
+					j++;
+					if (str == '\n') break;
+				}
+				j = 0;
+				str = getc(ff);
+				while (str != '\n')
+				{
+					route[i].type_of_road2[j] = str;
+					str = getc(ff);
+					j++;
+					if (str == EOF) break;
+				}
+				str = getc(ff);
+			}
+
+		}
+
+	}
+	fclose(ff);
+
+	int mas[br], cpm, cpm1;
+	j = 0;
+	for (i = 0; i<br; i++)
+	{
+		cpm = strcmp(route[i].initial_cordinates, nachalni_kordinati);
+		cpm1 = strcmp(route[i].final_cordinates, kraini_kordinati);
+		if ((cpm == 0) && (cpm1 == 0))
+		{
+			mas[j] = i;
+			j++;
+		}
+	}
+	if (j == 0)
+	{
+		printf("This road does not exist");
+	}
+	switch (option2)
+	{
+	case '1':
+	{
+		for (i = 0; i<br; i++)
+		{
+			cpm = strcmp(route[mas[i]].type_of_road, "tol-sistema");
+			if (cpm != 0)
+			{
+				j = mas[i];
+
+				printf(route[j].name_of_route);
+				printf("\n");
+				printf(route[j].initial_cordinates);
+				printf("\n");
+				printf(route[j].final_cordinates);
+				printf("\n");
+				printf(route[j].type_of_road);
+				printf("\n");
+				printf(route[j].type_of_road1);
+				printf("\n");
+				printf(route[j].type_of_road2);
+				printf("\n");
+				br = j;
+				while (br != 0)
+				{
+					ime++;
+					br--;
+				}
+				strcpy(newname, " .txt");
+				newname[0] = ime;
+				FILE *fp = fopen(newname, "r");
+				if (fp != NULL)
+				{
+					chetene_na_file(fp);
+				}
+				else
+				{
+					printf("This file does not exist");
+					break;
+				}
+			}
+		}
+	}
+	break;
+	case '2':
+	{
+		for (i = 0; i<br; i++)
+		{
+			cpm = strcmp(route[mas[i]].type_of_road1, "highway");
+			if (cpm == 0)
+			{
+				j = mas[i];
+				printf("%d", j);
+
+				printf(route[j].name_of_route);
+				printf("\n");
+				printf(route[j].initial_cordinates);
+				printf("\n");
+				printf(route[j].final_cordinates);
+				printf("\n");
+				printf(route[j].type_of_road);
+				printf("\n");
+				printf(route[j].type_of_road1);
+				printf("\n");
+				printf(route[j].type_of_road2);
+				printf("\n");
+				br = j;
+				while (br != 0)
+				{
+					ime++;
+					br--;
+				}
+				strcpy(newname, " .txt");
+				newname[0] = ime;
+				FILE *fp = fopen(newname, "r");
+				if (fp != NULL)
+				{
+					chetene_na_file(fp);
+				}
+				else
+				{
+					printf("This file does not exist");
+					break;
+				}
+			}
+		}
+	}
+	break;
+	case '3':
+	{
+		for (i = 0; i<br; i++)
+		{
+			cpm = strcmp(route[mas[i]].type_of_road2, "at least crossroad");
+			if (cpm == 0)
+			{
+				j = mas[i];
+				printf(route[j].name_of_route);
+				printf("\n");
+				printf(route[j].initial_cordinates);
+				printf("\n");
+				printf(route[j].final_cordinates);
+				printf("\n");
+				printf(route[j].type_of_road);
+				printf("\n");
+				printf(route[j].type_of_road1);
+				printf("\n");
+				printf(route[j].type_of_road2);
+				printf("\n");
+				br = j;
+				while (br != 0)
+				{
+					ime++;
+					br--;
+				}
+				strcpy(newname, " .txt");
+				newname[0] = ime;
+				FILE *fp = fopen(newname, "r");
+				if (fp != NULL)
+				{
+					chetene_na_file(fp);
+				}
+				else
+				{
+					printf("This file does not exist");
+					break;
+				}
+			}
+		}
+	}
+	break;
+	default:
+	{
+		j = mas[0];
+		printf(route[j].name_of_route);
+		printf("\n");
+		printf(route[j].initial_cordinates);
+		printf("\n");
+		printf(route[j].final_cordinates);
+		printf("\n");
+		printf(route[j].type_of_road);
+		printf("\n");
+		printf(route[j].type_of_road1);
+		printf("\n");
+		printf(route[j].type_of_road2);
+		printf("\n");
+		br = j;
+		while (br != 0)
+		{
+			ime++;
+			br--;
+		}
+		strcpy(newname, " .txt");
+		newname[0] = ime;
+		FILE *fp = fopen(newname, "r");
+		if (fp != NULL)
+		{
+			chetene_na_file(fp);
+		}
+		else
+		{
+			printf("This file does not exist");
+			break;
+		}
+	}
+	break;
+	}
+
+	for (i = 0; i<br; i++)
+	{
+
+		free(route[i].name_of_route);
+		free(route[i].initial_cordinates);
+		free(route[i].final_cordinates);
+		free(route[i].type_of_road);
+		free(route[i].type_of_road1);
+		free(route[i].type_of_road2);
+	}
+	free(nachalni_kordinati);
+	free(kraini_kordinati);
+
+	return 0;
+}
