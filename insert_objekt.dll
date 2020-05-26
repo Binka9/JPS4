@@ -1,0 +1,33 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main()
+{
+	List *root = NULL;
+	int n, i = 0;
+	char a = '\n';
+	printf("Enter the number of objekt along the route: ");
+	scanf("%d", &n);
+	printf("Enter the objekt");
+	printf("\n");
+	n = n + 1;
+	FILE *fp = fopen("New_FILE.txt", "w");
+	if (fp != NULL){
+		root = create_queue_list(n);
+		List* curr_item = root;
+		while (curr_item != '\0')
+		{
+			i = 0;
+			while (curr_item->val[i] != '\0'){
+				fputc(curr_item->val[i], fp);
+				i++;
+			}
+			fputc(a, fp);
+			curr_item = curr_item->next;
+		}
+	}
+	else printf("ERorr");
+	fclose(fp);
+	free_list(root);
+	return 0;
+}
