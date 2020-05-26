@@ -47,9 +47,3 @@ free(curr_item);
 curr_item= root;
 }
 }
-/*Добавя елемент след даден елемент*/
-void insert_item_after(List *item,List *item2)
-{
-item2->next=item->next;
-item->next = item2;
-}
