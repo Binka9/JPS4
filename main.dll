@@ -27,7 +27,7 @@ int main()
             break;
    }
    printf("For end the program enter 5 \n");
-    printf("For return int begin of the program enter 0\n");
+    printf("For return int begin of the program enter 4\n");
    option=Option();
    system("cls");
   }
