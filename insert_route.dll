@@ -1,0 +1,48 @@
+#include<stdio.h>
+#include<stdlib.h>
+#define STR_SIZE ((size_t)40)
+int main()
+{
+	char a = '\n';
+	Route route;
+	route.name_of_route = calloc(STR_SIZE, sizeof(char));
+	printf("Insert the name of route and time of road: ");
+	gets(route.name_of_route);
+	route.initial_cordinates = calloc(STR_SIZE, sizeof(char));
+	printf("Insert inital cordinates latitude and longitude: ");
+	gets(route.initial_cordinates);
+	route.final_cordinates = calloc(STR_SIZE, sizeof(char));
+	printf("Insert final cordinates latitude and longitude: ");
+	gets(route.final_cordinates);
+	route.type_of_road = calloc(STR_SIZE, sizeof(char));
+	printf("Insert type of road : ");
+	gets(route.type_of_road);
+	route.type_of_road1 = calloc(STR_SIZE, sizeof(char));
+	printf("Insert type of road: ");
+	gets(route.type_of_road1);
+	route.type_of_road2 = calloc(STR_SIZE, sizeof(char));
+	printf("Number crossroads ");
+	gets(route.type_of_road2);
+	FILE *fp;
+	fp = fopen("route.txt", "a+w");
+	if (fp != NULL)
+	{
+		save_in_file(route.name_of_route, fp);
+		fputc(a, fp);
+		save_in_file(route.initial_cordinates, fp);
+		fputc(a, fp);
+		save_in_file(route.final_cordinates, fp);
+		fputc(a, fp);
+		save_in_file(route.type_of_road, fp);
+		fputc(a, fp);
+		save_in_file(route.type_of_road1, fp);
+		fputc(a, fp);
+		save_in_file(route.type_of_road2, fp);
+		fputc(a, fp);
+	}
+	else printf("Cannot open this file");
+	char command_system[20];
+	strcpy(command_system, "insert_objekt.exe");
+	system(command_system);
+	return 0;
+}
