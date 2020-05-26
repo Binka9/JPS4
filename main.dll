@@ -1,0 +1,35 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main()
+{
+   char option;
+   char command_system[20];
+   option=Option();
+   while(option!='5')
+  {
+        switch(option)
+   {
+   case '1':
+           strcpy(command_system, "insert_route.exe");
+            system(command_system);
+            char command_system1[20];
+           strcpy(command_system1, "reneme_file.exe");
+           system(command_system1);
+            break;
+   case '2':
+            strcpy(command_system, "chose_route.exe");
+            system(command_system);
+            break;
+    case '3':
+           strcpy(command_system, "saved_route.exe");
+            system(command_system);
+            break;
+   }
+   printf("For end the program enter 5 \n");
+    printf("For return int begin of the program enter 0\n");
+   option=Option();
+   system("cls");
+  }
+   return 0;
+}
